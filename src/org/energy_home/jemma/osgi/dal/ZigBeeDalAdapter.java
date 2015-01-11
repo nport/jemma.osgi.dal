@@ -193,12 +193,12 @@ public class ZigBeeDalAdapter implements IApplicationService, IAttributeValuesLi
 
 		// update service properties if availability changed
 		ServiceRegistration reg = devices.get(appliance.getPid());
-		synchronized (reg) {
+		if (reg == null) {
+			LOG.error("No service reference for appliance: " + appliance.getPid());
+			return;
+		}
 
-			if (reg == null) {
-				LOG.error("No service reference for appliance: " + appliance.getPid());
-				return;
-			}
+		synchronized (reg) {
 			ServiceReference ref = reg.getReference();
 			if (ref == null) {
 				LOG.error("Error getting service reference for appliance PID" + appliance.getPid());
@@ -228,7 +228,6 @@ public class ZigBeeDalAdapter implements IApplicationService, IAttributeValuesLi
 			}
 			FrameworkUtil.getBundle(this.getClass()).getBundleContext().ungetService(ref);
 		}
-
 	}
 
 	public void notifyAttributeValue(String appliancePid, Integer endPointId, String clusterName, String attributeName,
