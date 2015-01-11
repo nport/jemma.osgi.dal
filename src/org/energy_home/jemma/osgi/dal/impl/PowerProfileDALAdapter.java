@@ -9,7 +9,6 @@ import org.energy_home.jemma.ah.cluster.zigbee.eh.PowerProfileResponse;
 import org.energy_home.jemma.ah.cluster.zigbee.eh.PowerProfileScheduleConstraintsResponse;
 import org.energy_home.jemma.ah.cluster.zigbee.eh.PowerProfileServer;
 import org.energy_home.jemma.ah.cluster.zigbee.eh.PowerProfileStateResponse;
-import org.energy_home.jemma.ah.cluster.zigbee.eh.ScheduledPhase;
 import org.energy_home.jemma.ah.hac.IAttributeValue;
 import org.energy_home.jemma.ah.hac.lib.ext.IAppliancesProxy;
 import org.energy_home.jemma.osgi.dal.utils.DataConverters;

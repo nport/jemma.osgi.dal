@@ -5,12 +5,10 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.energy_home.dal.functions.DoorLock;
 import org.energy_home.dal.functions.WindowCovering;
 import org.energy_home.jemma.ah.hac.IAppliance;
 import org.energy_home.jemma.ah.hac.lib.ext.IAppliancesProxy;
 import org.energy_home.jemma.osgi.dal.ClusterFunctionFactory;
-import org.energy_home.jemma.osgi.dal.impl.DoorLockDALAdapter;
 import org.energy_home.jemma.osgi.dal.impl.WindowCoveringDALAdapter;
 import org.energy_home.jemma.osgi.dal.utils.IDConverters;
 import org.osgi.framework.FrameworkUtil;

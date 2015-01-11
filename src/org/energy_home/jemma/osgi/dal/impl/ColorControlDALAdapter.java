@@ -1,13 +1,8 @@
 package org.energy_home.jemma.osgi.dal.impl;
 
-import java.util.List;
-
 import org.energy_home.dal.functions.ColorControl;
-import org.energy_home.jemma.ah.cluster.zigbee.eh.ApplianceControlServer;
 import org.energy_home.jemma.ah.cluster.zigbee.zll.ColorControlServer;
-import org.energy_home.jemma.ah.hac.ApplianceException;
 import org.energy_home.jemma.ah.hac.IAttributeValue;
-import org.energy_home.jemma.ah.hac.ServiceClusterException;
 import org.energy_home.jemma.ah.hac.lib.ext.IAppliancesProxy;
 import org.osgi.service.dal.DeviceException;
 import org.osgi.service.dal.FunctionData;

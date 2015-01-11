@@ -1,6 +1,5 @@
 package org.energy_home.jemma.osgi.dal;
 
-import java.awt.Frame;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -19,22 +18,19 @@ import org.energy_home.jemma.ah.hac.IAttributeValuesListener;
 import org.energy_home.jemma.ah.hac.IEndPoint;
 import org.energy_home.jemma.ah.hac.IServiceCluster;
 import org.energy_home.jemma.ah.hac.lib.ext.IAppliancesProxy;
-import org.energy_home.jemma.osgi.dal.factories.DoorLockFactory;
 import org.energy_home.jemma.osgi.dal.factories.BooleanControlOnOffFactory;
 import org.energy_home.jemma.osgi.dal.factories.ColorControlFactory;
+import org.energy_home.jemma.osgi.dal.factories.DoorLockFactory;
 import org.energy_home.jemma.osgi.dal.factories.EnergyMeterSimpleMeteringFactory;
 import org.energy_home.jemma.osgi.dal.factories.LevelControlFactory;
 import org.energy_home.jemma.osgi.dal.factories.PowerProfileFactory;
 import org.energy_home.jemma.osgi.dal.factories.TemperatureMeterThermostatFactory;
 import org.energy_home.jemma.osgi.dal.factories.WhiteGoodApplianceControlFactory;
 import org.energy_home.jemma.osgi.dal.factories.WindowCoveringFactory;
-import org.energy_home.jemma.osgi.dal.impl.BaseDALAdapter;
 import org.energy_home.jemma.osgi.dal.utils.IDConverters;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.dal.Device;
@@ -43,7 +39,6 @@ import org.osgi.service.dal.FunctionData;
 import org.osgi.service.dal.FunctionEvent;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
-import org.osgi.service.event.EventConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,12 +2,8 @@ package org.energy_home.jemma.osgi.dal.impl;
 
 import org.energy_home.jemma.ah.cluster.zigbee.eh.ApplianceControlServer;
 import org.energy_home.jemma.ah.cluster.zigbee.eh.WriteAttributeRecord;
-import org.energy_home.jemma.ah.hac.ApplianceException;
-import org.energy_home.jemma.ah.hac.IAttributeValue;
-import org.energy_home.jemma.ah.hac.ServiceClusterException;
 import org.energy_home.jemma.ah.hac.lib.ext.IAppliancesProxy;
 import org.osgi.service.dal.DeviceException;
-import org.osgi.service.dal.FunctionData;
 
 public abstract class BaseApplianceControlDalAdapter extends BaseDALAdapter {
 

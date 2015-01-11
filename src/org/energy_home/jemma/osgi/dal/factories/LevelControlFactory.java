@@ -6,19 +6,14 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.energy_home.jemma.ah.hac.IAppliance;
-import org.energy_home.jemma.ah.hac.lib.AttributeValue;
 import org.energy_home.jemma.ah.hac.lib.ext.IAppliancesProxy;
 import org.energy_home.jemma.osgi.dal.ClusterFunctionFactory;
-import org.energy_home.jemma.osgi.dal.impl.BooleanControlDALAdapter;
 import org.energy_home.jemma.osgi.dal.impl.LevelControlDALAdapter;
 import org.energy_home.jemma.osgi.dal.utils.IDConverters;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.dal.Function;
-import org.osgi.service.dal.FunctionData;
-import org.osgi.service.dal.functions.BooleanControl;
 import org.osgi.service.dal.functions.MultiLevelControl;
-import org.osgi.service.dal.functions.data.BooleanData;
 
 public class LevelControlFactory implements ClusterFunctionFactory {
 

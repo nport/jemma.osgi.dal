@@ -9,8 +9,6 @@ import org.osgi.service.dal.DeviceException;
 import org.osgi.service.dal.FunctionData;
 import org.osgi.service.dal.OperationMetadata;
 import org.osgi.service.dal.PropertyMetadata;
-import org.osgi.service.dal.functions.BooleanControl;
-import org.osgi.service.dal.functions.data.BooleanData;
 
 /**
  * DAL function implementation for ZigBee OnOffServer

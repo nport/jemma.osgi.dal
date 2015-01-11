@@ -1,10 +1,7 @@
 package org.energy_home.jemma.osgi.dal.impl;
 
-import org.energy_home.dal.functions.DoorLock;
 import org.energy_home.dal.functions.WindowCovering;
-import org.energy_home.dal.functions.data.DoorLockData;
 import org.energy_home.dal.functions.data.WindowCoveringData;
-import org.energy_home.jemma.ah.cluster.zigbee.closures.DoorLockServer;
 import org.energy_home.jemma.ah.cluster.zigbee.closures.WindowCoveringServer;
 import org.energy_home.jemma.ah.hac.IAttributeValue;
 import org.energy_home.jemma.ah.hac.lib.ext.IAppliancesProxy;
@@ -12,8 +9,6 @@ import org.osgi.service.dal.DeviceException;
 import org.osgi.service.dal.FunctionData;
 import org.osgi.service.dal.OperationMetadata;
 import org.osgi.service.dal.PropertyMetadata;
-import org.osgi.service.dal.functions.BooleanControl;
-import org.osgi.service.dal.functions.data.BooleanData;
 
 /**
  * DAL function implementation for ZigBee OnOffServer

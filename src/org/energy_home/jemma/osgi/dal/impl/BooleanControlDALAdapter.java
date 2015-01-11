@@ -1,11 +1,7 @@
 package org.energy_home.jemma.osgi.dal.impl;
 
-import java.util.Map;
-
 import org.energy_home.jemma.ah.hac.IAttributeValue;
-import org.energy_home.jemma.ah.hac.lib.AttributeValue;
 import org.energy_home.jemma.ah.hac.lib.ext.IAppliancesProxy;
-import org.energy_home.jemma.osgi.dal.ClusterFunctionFactory;
 import org.osgi.service.dal.DeviceException;
 import org.osgi.service.dal.FunctionData;
 import org.osgi.service.dal.OperationMetadata;

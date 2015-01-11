@@ -10,6 +10,8 @@ import org.energy_home.jemma.ah.hac.lib.ext.IAppliancesProxy;
 import org.energy_home.jemma.osgi.dal.ClusterFunctionFactory;
 import org.energy_home.jemma.osgi.dal.impl.BooleanControlDALAdapter;
 import org.energy_home.jemma.osgi.dal.utils.IDConverters;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.dal.Function;
 import org.osgi.service.dal.functions.BooleanControl;
 
