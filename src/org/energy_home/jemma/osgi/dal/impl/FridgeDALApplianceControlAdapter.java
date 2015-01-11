@@ -24,63 +24,54 @@ import org.osgi.service.dal.Units;
 import org.osgi.service.dal.functions.data.BooleanData;
 import org.osgi.service.dal.functions.data.LevelData;
 
-public class FridgeDALApplianceControlAdapter extends BaseApplianceControlDalAdapter implements Fridge{
+public class FridgeDALApplianceControlAdapter extends BaseApplianceControlDalAdapter implements Fridge {
 
-	private static String ZIGBEETIMEUNIT="ZIGBEE_TIME";
-	
-	public FridgeDALApplianceControlAdapter(String appliancePid, Integer endPointId,
-			IAppliancesProxy appliancesProxy) {
+	private static String ZIGBEETIMEUNIT = "ZIGBEE_TIME";
+
+	public FridgeDALApplianceControlAdapter(String appliancePid, Integer endPointId, IAppliancesProxy appliancesProxy) {
 		super(appliancePid, endPointId, appliancesProxy);
 	}
-	
+
 	@Override
 	public FunctionData getMatchingPropertyValue(String attributeName, IAttributeValue attributeValue) {
-		
-		FunctionData data=null;
-		if(ApplianceControlServer.ATTR_TemperatureTarget0_NAME.equals(attributeName))
-		{
-			int value=(Integer)(attributeValue.getValue());
-			data=new LevelData(attributeValue.getTimestamp(), null, Units.DEGREE_CELSIUS, new BigDecimal(value));
-		}else if(ApplianceControlServer.ATTR_TemperatureTarget1_NAME.equals(attributeName))
-		{
-			int value2=(Integer)(attributeValue.getValue());
-			//value adjustment
-			int realValue=value2-65536;
-			data=new LevelData(attributeValue.getTimestamp(), null, Units.DEGREE_CELSIUS, new BigDecimal(realValue));
-		}else if(ApplianceControlServer.ATTR_NormalMode_NAME.equals(attributeName))
-		{
-			Boolean normalMode=(Boolean) attributeValue.getValue();
-			data=new BooleanData(attributeValue.getTimestamp(),null,normalMode.booleanValue());
-		}else if(ApplianceControlServer.ATTR_EcoMode_NAME.equals(attributeName))
-		{
-			Boolean ecoMode=(Boolean) attributeValue.getValue();
-			//boolean ecomode= (boolean) attributeValue.getValue();
-			data=new BooleanData(attributeValue.getTimestamp(),null,ecoMode.booleanValue());
-		}else if(ApplianceControlServer.ATTR_SuperCoolMode_NAME.equals(attributeName))
-		{
-			Boolean supercool=(Boolean) attributeValue.getValue();
-			data=new BooleanData(attributeValue.getTimestamp(),null,supercool.booleanValue());
-		}else if(ApplianceControlServer.ATTR_SuperFreezeMode_NAME.equals(attributeName))
-		{
-			Boolean superfreeze=(Boolean) attributeValue.getValue();
-			data=new BooleanData(attributeValue.getTimestamp(),null,superfreeze.booleanValue());
-		}else if(ApplianceControlServer.ATTR_HolidayMode_NAME.equals(attributeName))
-		{
-			Boolean holiday=(Boolean) attributeValue.getValue();
-			data=new BooleanData(attributeValue.getTimestamp(),null,holiday.booleanValue());
-		}else if(ApplianceControlServer.ATTR_IceParty_NAME.equals(attributeName))
-		{
-			Boolean iceparty=(Boolean) attributeValue.getValue();
-			data=new BooleanData(attributeValue.getTimestamp(),null,iceparty.booleanValue());
-		}else{
-				return null;
+
+		FunctionData data = null;
+		if (ApplianceControlServer.ATTR_TemperatureTarget0_NAME.equals(attributeName)) {
+			int value = (Integer) (attributeValue.getValue());
+			data = new LevelData(attributeValue.getTimestamp(), null, Units.DEGREE_CELSIUS, new BigDecimal(value));
+		} else if (ApplianceControlServer.ATTR_TemperatureTarget1_NAME.equals(attributeName)) {
+			int value2 = (Integer) (attributeValue.getValue());
+			// value adjustment
+			int realValue = value2 - 65536;
+			data = new LevelData(attributeValue.getTimestamp(), null, Units.DEGREE_CELSIUS, new BigDecimal(realValue));
+		} else if (ApplianceControlServer.ATTR_NormalMode_NAME.equals(attributeName)) {
+			Boolean normalMode = (Boolean) attributeValue.getValue();
+			data = new BooleanData(attributeValue.getTimestamp(), null, normalMode.booleanValue());
+		} else if (ApplianceControlServer.ATTR_EcoMode_NAME.equals(attributeName)) {
+			Boolean ecoMode = (Boolean) attributeValue.getValue();
+			// boolean ecomode= (boolean) attributeValue.getValue();
+			data = new BooleanData(attributeValue.getTimestamp(), null, ecoMode.booleanValue());
+		} else if (ApplianceControlServer.ATTR_SuperCoolMode_NAME.equals(attributeName)) {
+			Boolean supercool = (Boolean) attributeValue.getValue();
+			data = new BooleanData(attributeValue.getTimestamp(), null, supercool.booleanValue());
+		} else if (ApplianceControlServer.ATTR_SuperFreezeMode_NAME.equals(attributeName)) {
+			Boolean superfreeze = (Boolean) attributeValue.getValue();
+			data = new BooleanData(attributeValue.getTimestamp(), null, superfreeze.booleanValue());
+		} else if (ApplianceControlServer.ATTR_HolidayMode_NAME.equals(attributeName)) {
+			Boolean holiday = (Boolean) attributeValue.getValue();
+			data = new BooleanData(attributeValue.getTimestamp(), null, holiday.booleanValue());
+		} else if (ApplianceControlServer.ATTR_IceParty_NAME.equals(attributeName)) {
+			Boolean iceparty = (Boolean) attributeValue.getValue();
+			data = new BooleanData(attributeValue.getTimestamp(), null, iceparty.booleanValue());
+		} else {
+			return null;
 		}
 		return data;
 	}
 
 	@Override
 	public void updateApplianceSubscriptions() {
-		
+
 	}
 
 	@Override
@@ -101,103 +92,103 @@ public class FridgeDALApplianceControlAdapter extends BaseApplianceControlDalAda
 
 	@Override
 	public LevelData getFridgeTemperature() throws DeviceException {
-		LevelData temperature=null;
+		LevelData temperature = null;
 		int result;
 		try {
-			result=getCluster().getTemperatureTarget0(appliancesProxy.getRequestContext(true));
+			result = getCluster().getTemperatureTarget0(appliancesProxy.getRequestContext(true));
 		} catch (Exception e) {
-			throw new DeviceException(e.getMessage(),e.getCause());
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
-		temperature=new LevelData(System.currentTimeMillis(), null, Units.DEGREE_CELSIUS, new BigDecimal(result));
+		temperature = new LevelData(System.currentTimeMillis(), null, Units.DEGREE_CELSIUS, new BigDecimal(result));
 		return temperature;
 	}
-	
+
 	@Override
 	public LevelData getFreezerTemperature() throws DeviceException {
-		LevelData temperature=null;
+		LevelData temperature = null;
 		int result;
 		try {
-			result=getCluster().getTemperatureTarget1(appliancesProxy.getRequestContext(true));
+			result = getCluster().getTemperatureTarget1(appliancesProxy.getRequestContext(true));
 		} catch (Exception e) {
-			throw new DeviceException(e.getMessage(),e.getCause());
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
-		//adjust temperature: the Fridge returns it with a gap of 65536
-		int realValue=result-65536;
-		temperature=new LevelData(System.currentTimeMillis(), null, Units.DEGREE_CELSIUS, new BigDecimal(realValue));
+		// adjust temperature: the Fridge returns it with a gap of 65536
+		int realValue = result - 65536;
+		temperature = new LevelData(System.currentTimeMillis(), null, Units.DEGREE_CELSIUS, new BigDecimal(realValue));
 		return temperature;
 	}
 
 	@Override
 	public BooleanData getSuperCoolMode() throws DeviceException {
-		BooleanData superCoolMode=null;
+		BooleanData superCoolMode = null;
 		Boolean result;
 		try {
-			result=getCluster().getSuperCoolMode(appliancesProxy.getRequestContext(true));
+			result = getCluster().getSuperCoolMode(appliancesProxy.getRequestContext(true));
 		} catch (Exception e) {
-			throw new DeviceException(e.getMessage(),e.getCause());
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
-		
-		superCoolMode=new BooleanData(System.currentTimeMillis(), null, result);
+
+		superCoolMode = new BooleanData(System.currentTimeMillis(), null, result);
 		return superCoolMode;
 	}
 
 	@Override
 	public void setSuperCoolMode(Boolean data) throws DeviceException {
 		execSingleWriteFunction(Fridge.PROPERTY_SUPERCOOLMODE, data);
-		return ;
+		return;
 	}
 
 	@Override
 	public BooleanData getSuperFreezeMode() throws DeviceException {
-		BooleanData superFreezeMode=null;
+		BooleanData superFreezeMode = null;
 		Boolean result;
 		try {
-			result=getCluster().getSuperFreezeMode(appliancesProxy.getRequestContext(true));
+			result = getCluster().getSuperFreezeMode(appliancesProxy.getRequestContext(true));
 		} catch (Exception e) {
-			throw new DeviceException(e.getMessage(),e.getCause());
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
-		
-		superFreezeMode=new BooleanData(System.currentTimeMillis(), null, result);
+
+		superFreezeMode = new BooleanData(System.currentTimeMillis(), null, result);
 		return superFreezeMode;
 	}
 
 	@Override
 	public void setSuperFreezeMode(Boolean data) throws DeviceException {
 		execSingleWriteFunction(Fridge.PROPERTY_SUPERFREEZE, data);
-		return ;
+		return;
 	}
 
 	@Override
 	public BooleanData getEcoMode() throws DeviceException {
-		BooleanData ecomode=null;
+		BooleanData ecomode = null;
 		Boolean result;
 		try {
-			result=getCluster().getEcoMode(appliancesProxy.getRequestContext(true));
+			result = getCluster().getEcoMode(appliancesProxy.getRequestContext(true));
 		} catch (Exception e) {
-			throw new DeviceException(e.getMessage(),e.getCause());
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
-		
-		ecomode=new BooleanData(System.currentTimeMillis(), null, result);
+
+		ecomode = new BooleanData(System.currentTimeMillis(), null, result);
 		return ecomode;
 	}
 
 	@Override
 	public void setEcoMode(Boolean data) throws DeviceException {
 		execSingleWriteFunction(Fridge.PROPERTY_ECOMODE, data);
-		return ;
+		return;
 	}
 
 	@Override
 	public BooleanData getIceParty() throws DeviceException {
-		BooleanData iceparty=null;
+		BooleanData iceparty = null;
 		Boolean result;
 		try {
-			result=getCluster().getIceParty(appliancesProxy.getRequestContext(true));
+			result = getCluster().getIceParty(appliancesProxy.getRequestContext(true));
 		} catch (Exception e) {
-			throw new DeviceException(e.getMessage(),e.getCause());
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
-		
-		iceparty=new BooleanData(System.currentTimeMillis(), null, result);
+
+		iceparty = new BooleanData(System.currentTimeMillis(), null, result);
 		return iceparty;
 	}
 
@@ -209,22 +200,22 @@ public class FridgeDALApplianceControlAdapter extends BaseApplianceControlDalAda
 
 	@Override
 	public BooleanData getHolidayMode() throws DeviceException {
-		BooleanData holidayMode=null;
+		BooleanData holidayMode = null;
 		Boolean result;
 		try {
-			result=getCluster().getHolidayMode(appliancesProxy.getRequestContext(true));
+			result = getCluster().getHolidayMode(appliancesProxy.getRequestContext(true));
 		} catch (Exception e) {
-			throw new DeviceException(e.getMessage(),e.getCause());
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
-		
-		holidayMode=new BooleanData(System.currentTimeMillis(), null, result);
+
+		holidayMode = new BooleanData(System.currentTimeMillis(), null, result);
 		return holidayMode;
 	}
 
 	@Override
 	public void setHolidayMode(Boolean data) throws DeviceException {
 		execSingleWriteFunction(Fridge.PROPERTY_HOLIDAYMODE, data);
-		return ;
+		return;
 	}
 
 }

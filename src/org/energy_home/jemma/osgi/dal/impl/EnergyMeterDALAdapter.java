@@ -18,14 +18,14 @@ import org.osgi.service.dal.functions.data.LevelData;
 
 import sun.util.LocaleServiceProviderPool.LocalizedObjectGetter;
 
-public class EnergyMeterDALAdapter extends BaseDALAdapter implements Meter{
+public class EnergyMeterDALAdapter extends BaseDALAdapter implements Meter {
 
-	private Integer divisor=null;
-	private Integer multiplier=null;
+	private Integer divisor = null;
+	private Integer multiplier = null;
 	private Dictionary properties;
-	
-	private static String SIMPLEMETERINGCLUSTER="org.energy_home.jemma.ah.cluster.zigbee.metering.SimpleMeteringServer";
-	
+
+	private static String SIMPLEMETERINGCLUSTER = "org.energy_home.jemma.ah.cluster.zigbee.metering.SimpleMeteringServer";
+
 	public EnergyMeterDALAdapter(String appliancePid, Integer endPointId, IAppliancesProxy appliancesProxy) {
 		super(appliancePid, endPointId, appliancesProxy);
 	}
@@ -56,119 +56,103 @@ public class EnergyMeterDALAdapter extends BaseDALAdapter implements Meter{
 		updateMultiplier();
 		return multiplier;
 	}
-	
-	private void updateDivisor() throws Exception
-	{
-		if(divisor==null)
-		{
-			divisor=(Integer)this.appliancesProxy.invokeClusterMethod(appliancePid,
-				endPointId, 
-				SIMPLEMETERINGCLUSTER, "getDivisor", 
-				createParams(SIMPLEMETERINGCLUSTER, "getDivisor", new String[0]));
+
+	private void updateDivisor() throws Exception {
+		if (divisor == null) {
+			divisor = (Integer) this.appliancesProxy.invokeClusterMethod(appliancePid, endPointId, SIMPLEMETERINGCLUSTER,
+					"getDivisor", createParams(SIMPLEMETERINGCLUSTER, "getDivisor", new String[0]));
 		}
-		
-		//Work-around: Indesit White goods does not report divisor and multiplier
-		if(divisor==0)
-		{
-			divisor=10000;
+
+		// Work-around: Indesit White goods does not report divisor and multiplier
+		if (divisor == 0) {
+			divisor = 10000;
 		}
 	}
-	
-	private void updateMultiplier() throws Exception
-	{
-		if(multiplier==null)
-		{
-			multiplier=(Integer)this.appliancesProxy.invokeClusterMethod(appliancePid,
-				endPointId,
-				SIMPLEMETERINGCLUSTER, 
-				"getMultiplier", 
-				createParams(SIMPLEMETERINGCLUSTER, "gedMultiplier", new String[0]));
+
+	private void updateMultiplier() throws Exception {
+		if (multiplier == null) {
+			multiplier = (Integer) this.appliancesProxy.invokeClusterMethod(appliancePid, endPointId, SIMPLEMETERINGCLUSTER,
+					"getMultiplier", createParams(SIMPLEMETERINGCLUSTER, "gedMultiplier", new String[0]));
 		}
-		//Work-around: Indesit White goods does not report divisor and multiplier
-		if(multiplier==0)
-		{
-			multiplier=1;
+		// Work-around: Indesit White goods does not report divisor and multiplier
+		if (multiplier == 0) {
+			multiplier = 1;
 		}
 	}
-	
+
 	@Override
 	public LevelData getCurrent() throws UnsupportedOperationException, IllegalStateException, DeviceException {
-		BigDecimal result=null;
+		BigDecimal result = null;
 		int instantaneousDemand;
 		try {
-			instantaneousDemand=(Integer)this.appliancesProxy.invokeClusterMethod(appliancePid, endPointId, SIMPLEMETERINGCLUSTER,
-					"getIstantaneousDemand", 
+			instantaneousDemand = (Integer) this.appliancesProxy.invokeClusterMethod(appliancePid, endPointId,
+					SIMPLEMETERINGCLUSTER, "getIstantaneousDemand",
 					createParams(SIMPLEMETERINGCLUSTER, "getIstantaneousDemand", new String[0]));
-			result=this.scaleValues(new BigDecimal(instantaneousDemand));
-			
+			result = this.scaleValues(new BigDecimal(instantaneousDemand));
+
 		} catch (Exception e) {
-			throw new DeviceException(e.getMessage(),e.getCause());
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
-		
-		
-		LevelData data=new LevelData(System.currentTimeMillis(), null, Units.WATT, result);
+
+		LevelData data = new LevelData(System.currentTimeMillis(), null, Units.WATT, result);
 		return data;
 	}
 
 	@Override
 	public LevelData getTotal() throws UnsupportedOperationException, IllegalStateException, DeviceException {
-		BigDecimal result=null;
+		BigDecimal result = null;
 		long total;
-		//According to meter type obtained from SERVICE_FLOW property, the correct cluster method is called
+		// According to meter type obtained from SERVICE_FLOW property, the correct cluster method is called
 		try {
-			if(properties.get(Meter.SERVICE_FLOW).equals(Meter.FLOW_OUT))
-			{
-				//it's a Production meter meter
-				total=getCluster().getCurrentSummationReceived(appliancesProxy.getRequestContext(true));
-				
-			}else{
-				//it's a consumption meter
-				total=getCluster().getCurrentSummationDelivered(appliancesProxy.getRequestContext(true));
+			if (properties.get(Meter.SERVICE_FLOW).equals(Meter.FLOW_OUT)) {
+				// it's a Production meter meter
+				total = getCluster().getCurrentSummationReceived(appliancesProxy.getRequestContext(true));
+
+			} else {
+				// it's a consumption meter
+				total = getCluster().getCurrentSummationDelivered(appliancesProxy.getRequestContext(true));
 			}
-			result=this.scaleValues(new BigDecimal(total));
+			result = this.scaleValues(new BigDecimal(total));
 		} catch (Exception e) {
-			throw new DeviceException(e.getMessage(),e.getCause());
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
-		
-		
-		LevelData data=new LevelData(System.currentTimeMillis(), null, Units.WATT_PER_HOUR, result);
+
+		LevelData data = new LevelData(System.currentTimeMillis(), null, Units.WATT_PER_HOUR, result);
 		return data;
 	}
-	
-	private BigDecimal scaleValues(BigDecimal value) throws Exception
-	{
-		BigDecimal factor=new BigDecimal(getMultiplier())
-			.divide(new BigDecimal(getDivisor())) //now I have the factor for conversion in KW*h
-			//I need the value in Watt (or Watt*Hour)
-			.multiply(new BigDecimal(1000));
-		
-		BigDecimal level=value.multiply(factor);
+
+	private BigDecimal scaleValues(BigDecimal value) throws Exception {
+		BigDecimal factor = new BigDecimal(getMultiplier()).divide(new BigDecimal(getDivisor())) // now I have the factor for
+																									// conversion in KW*h
+				// I need the value in Watt (or Watt*Hour)
+				.multiply(new BigDecimal(1000));
+
+		BigDecimal level = value.multiply(factor);
 		return level;
 	}
 
 	@Override
 	public void resetTotal() throws UnsupportedOperationException, IllegalStateException, DeviceException {
 		throw new UnsupportedOperationException("Unsupported operation");
-		
+
 	}
 
 	@Override
 	public FunctionData getMatchingPropertyValue(String attributeName, IAttributeValue attributeValue) {
-		LevelData levelData=null;
+		LevelData levelData = null;
 		try {
-		
-			if(attributeName=="CurrentSummationDelivered")
-			{
-				long value=(Long)(attributeValue.getValue());
-				
-					levelData=new LevelData(attributeValue.getTimestamp(), null, Units.WATT_PER_HOUR, scaleValues(new BigDecimal(value)));
-			}else if(attributeName=="IstantaneousDemand")
-			{
-				int value=(Integer)(attributeValue.getValue());
-				levelData=new LevelData(attributeValue.getTimestamp(), null, Units.WATT, scaleValues(new BigDecimal(value)));
+
+			if (attributeName == "CurrentSummationDelivered") {
+				long value = (Long) (attributeValue.getValue());
+
+				levelData = new LevelData(attributeValue.getTimestamp(), null, Units.WATT_PER_HOUR, scaleValues(new BigDecimal(
+						value)));
+			} else if (attributeName == "IstantaneousDemand") {
+				int value = (Integer) (attributeValue.getValue());
+				levelData = new LevelData(attributeValue.getTimestamp(), null, Units.WATT, scaleValues(new BigDecimal(value)));
 			}
 		} catch (Exception e) {
-			
+
 		}
 		return levelData;
 	}
@@ -176,16 +160,16 @@ public class EnergyMeterDALAdapter extends BaseDALAdapter implements Meter{
 	@Override
 	public void updateApplianceSubscriptions() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setServiceProperties(Dictionary d) {
-		this.properties=d;
+		this.properties = d;
 	}
-	
-	private SimpleMeteringServer getCluster()
-	{
-		return (SimpleMeteringServer) appliancesProxy.getAppliance(appliancePid).getEndPoint(endPointId).getServiceCluster(SIMPLEMETERINGCLUSTER);
+
+	private SimpleMeteringServer getCluster() {
+		return (SimpleMeteringServer) appliancesProxy.getAppliance(appliancePid).getEndPoint(endPointId)
+				.getServiceCluster(SIMPLEMETERINGCLUSTER);
 	}
 
 }

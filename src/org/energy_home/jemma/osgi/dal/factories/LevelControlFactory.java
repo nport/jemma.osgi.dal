@@ -22,27 +22,27 @@ import org.osgi.service.dal.functions.data.BooleanData;
 
 public class LevelControlFactory implements ClusterFunctionFactory {
 
-	Map<String,String> propertiesMapping;
-	
-	public LevelControlFactory()
-	{
-		propertiesMapping=new HashMap<String, String>();
+	Map<String, String> propertiesMapping;
+
+	public LevelControlFactory() {
+		propertiesMapping = new HashMap<String, String>();
 		propertiesMapping.put("CurrentLevel", MultiLevelControl.PROPERTY_DATA);
 	}
-	
+
 	@Override
 	public ServiceRegistration createFunctionService(IAppliance appliance, Integer endPointId, IAppliancesProxy appliancesProxy) {
-		Dictionary d=new Hashtable();
-		
+		Dictionary d = new Hashtable();
+
 		d.put(Function.SERVICE_DEVICE_UID, IDConverters.getDeviceUid(appliance.getPid(), appliance.getConfiguration()));
 		d.put(Function.SERVICE_UID, getFunctionUID(appliance));
-		
-		d.put(Function.SERVICE_OPERATION_NAMES, new String[]{});
-		d.put(Function.SERVICE_PROPERTY_NAMES, new String[]{MultiLevelControl.PROPERTY_DATA});
-		return FrameworkUtil.getBundle(this.getClass()).getBundleContext().registerService(
-				new String[]{Function.class.getName(),MultiLevelControl.class.getName()}, 
-				new LevelControlDALAdapter(appliance.getPid(), endPointId, appliancesProxy), 
-				d);		
+
+		d.put(Function.SERVICE_OPERATION_NAMES, new String[] {});
+		d.put(Function.SERVICE_PROPERTY_NAMES, new String[] { MultiLevelControl.PROPERTY_DATA });
+		return FrameworkUtil
+				.getBundle(this.getClass())
+				.getBundleContext()
+				.registerService(new String[] { Function.class.getName(), MultiLevelControl.class.getName() },
+						new LevelControlDALAdapter(appliance.getPid(), endPointId, appliancesProxy), d);
 	}
 
 	@Override
@@ -52,11 +52,11 @@ public class LevelControlFactory implements ClusterFunctionFactory {
 
 	@Override
 	public String getFunctionUID(IAppliance appliance) {
-		return IDConverters.getFunctionUid(appliance.getPid(), appliance.getConfiguration(),"MultiLevelControl");
+		return IDConverters.getFunctionUid(appliance.getPid(), appliance.getConfiguration(), "MultiLevelControl");
 	}
 
 	@Override
-	public String getMatchingPropertyName(String attributeName,IAppliance appliance) {
+	public String getMatchingPropertyName(String attributeName, IAppliance appliance) {
 		return propertiesMapping.get(attributeName);
 	}
 

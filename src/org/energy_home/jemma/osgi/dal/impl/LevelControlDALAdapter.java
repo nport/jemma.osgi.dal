@@ -38,18 +38,16 @@ public class LevelControlDALAdapter extends BaseDALAdapter implements MultiLevel
 		return null;
 	}
 
-	
-	private LevelControlServer getCluster()
-	{
-		return (LevelControlServer) appliancesProxy.getAppliance(appliancePid).getEndPoint(endPointId).getServiceCluster(LEVELCONTROLCLUSTER);
+	private LevelControlServer getCluster() {
+		return (LevelControlServer) appliancesProxy.getAppliance(appliancePid).getEndPoint(endPointId)
+				.getServiceCluster(LEVELCONTROLCLUSTER);
 	}
 
 	@Override
 	public FunctionData getMatchingPropertyValue(String attributeName, IAttributeValue attributeValue) {
-		FunctionData result=null;
-		if(attributeName.equals("CurrentLevel"))
-		{
-			result=new LevelData(System.currentTimeMillis(), null, "", new BigDecimal((Short)(attributeValue.getValue())));
+		FunctionData result = null;
+		if (attributeName.equals("CurrentLevel")) {
+			result = new LevelData(System.currentTimeMillis(), null, "", new BigDecimal((Short) (attributeValue.getValue())));
 		}
 		return result;
 	}
@@ -57,19 +55,17 @@ public class LevelControlDALAdapter extends BaseDALAdapter implements MultiLevel
 	@Override
 	public void updateApplianceSubscriptions() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
 
 	@Override
 	public LevelData getData() throws UnsupportedOperationException, IllegalStateException, DeviceException {
-		LevelData data=null;
-		try{
-			Short level=getCluster().getCurrentLevel(appliancesProxy.getRequestContext(true));
-			data=new LevelData(System.currentTimeMillis(), null, "", new BigDecimal(level));
-		}catch(Exception e)
-		{
-			throw new DeviceException(e.getMessage(),e.getCause());
+		LevelData data = null;
+		try {
+			Short level = getCluster().getCurrentLevel(appliancesProxy.getRequestContext(true));
+			data = new LevelData(System.currentTimeMillis(), null, "", new BigDecimal(level));
+		} catch (Exception e) {
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
 		return data;
 	}
@@ -77,11 +73,10 @@ public class LevelControlDALAdapter extends BaseDALAdapter implements MultiLevel
 	@Override
 	public void setData(BigDecimal level) throws UnsupportedOperationException, IllegalStateException, DeviceException,
 			IllegalArgumentException {
-		try{
+		try {
 			getCluster().execMoveToLevel(level.shortValue(), 10, appliancesProxy.getRequestContext(false));
-		}catch(Exception e)
-		{
-			throw new DeviceException(e.getMessage(),e.getCause());
+		} catch (Exception e) {
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
 	}
 

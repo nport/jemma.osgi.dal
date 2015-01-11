@@ -40,32 +40,28 @@ public class ColorControlDALAdapter extends BaseDALAdapter implements ColorContr
 		return null;
 	}
 
-	public void setHS(Short hue,Short saturation) throws DeviceException
-	{
+	public void setHS(Short hue, Short saturation) throws DeviceException {
 		try {
 			getCluster().execMoveToHueAndSaturation(hue, saturation, 10, appliancesProxy.getRequestContext(true));
-			//getCluster().execStepColor((int)(xy[0]*254), (int)(xy[1]*254), 10, appliancesProxy.getRequestContext(true));
+			// getCluster().execStepColor((int)(xy[0]*254), (int)(xy[1]*254), 10, appliancesProxy.getRequestContext(true));
 		} catch (Exception e) {
-			throw new DeviceException(e.getMessage(),e.getCause());
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
 	}
-	
-	public Short[] getHS() throws DeviceException
-	{
-		try
-		{
-			Short hue=getCluster().getCurrentHue(appliancesProxy.getRequestContext(true));
-			Short sat=getCluster().getCurrentSaturation(appliancesProxy.getRequestContext(true));
-			return new Short[]{hue,sat};
-		}catch(Exception e)
-		{
-			throw new DeviceException(e.getMessage(),e.getCause());
+
+	public Short[] getHS() throws DeviceException {
+		try {
+			Short hue = getCluster().getCurrentHue(appliancesProxy.getRequestContext(true));
+			Short sat = getCluster().getCurrentSaturation(appliancesProxy.getRequestContext(true));
+			return new Short[] { hue, sat };
+		} catch (Exception e) {
+			throw new DeviceException(e.getMessage(), e.getCause());
 		}
 	}
-	
-	private ColorControlServer getCluster()
-	{
-		return (ColorControlServer) appliancesProxy.getAppliance(appliancePid).getEndPoint(endPointId).getServiceCluster(COLORCONTROLCLUSTER);
+
+	private ColorControlServer getCluster() {
+		return (ColorControlServer) appliancesProxy.getAppliance(appliancePid).getEndPoint(endPointId)
+				.getServiceCluster(COLORCONTROLCLUSTER);
 	}
 
 	@Override
@@ -77,7 +73,7 @@ public class ColorControlDALAdapter extends BaseDALAdapter implements ColorContr
 	@Override
 	public void updateApplianceSubscriptions() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

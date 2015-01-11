@@ -17,15 +17,14 @@ import org.osgi.service.dal.functions.data.BooleanData;
  * DAL function implementation for ZigBee OnOffServer
  * 
  * @author Ivan Grimaldi (grimaldi@ismb.it)
- *
+ * 
  */
 public class BooleanControlDALAdapter extends BaseDALAdapter implements BooleanControl {
 
 	private static String ONOFFCLUSTER = "org.energy_home.jemma.ah.cluster.zigbee.general.OnOffServer";
 
-	public BooleanControlDALAdapter(String appliancePid,Integer endPointId,IAppliancesProxy appliancesProxy)
-	{
-		super(appliancePid,endPointId,appliancesProxy);
+	public BooleanControlDALAdapter(String appliancePid, Integer endPointId, IAppliancesProxy appliancesProxy) {
+		super(appliancePid, endPointId, appliancesProxy);
 	}
 
 	@Override
@@ -50,8 +49,8 @@ public class BooleanControlDALAdapter extends BaseDALAdapter implements BooleanC
 	public BooleanData getData() throws DeviceException {
 		Boolean data = null;
 		try {
-			data = (Boolean) this.appliancesProxy.invokeClusterMethod(appliancePid, endPointId, ONOFFCLUSTER,
-					"getOnOff", createParams(ONOFFCLUSTER, "getOnOff", new String[0]));
+			data = (Boolean) this.appliancesProxy.invokeClusterMethod(appliancePid, endPointId, ONOFFCLUSTER, "getOnOff",
+					createParams(ONOFFCLUSTER, "getOnOff", new String[0]));
 		} catch (Exception e) {
 			throw new DeviceException(e.getMessage(), e.getCause());
 		}
@@ -100,15 +99,15 @@ public class BooleanControlDALAdapter extends BaseDALAdapter implements BooleanC
 
 	@Override
 	public FunctionData getMatchingPropertyValue(String attributeName, IAttributeValue value) {
-		boolean v=(Boolean) value.getValue();
-		BooleanData data=new BooleanData(value.getTimestamp(), null, v);
+		boolean v = (Boolean) value.getValue();
+		BooleanData data = new BooleanData(value.getTimestamp(), null, v);
 		return data;
 	}
 
 	@Override
 	public void updateApplianceSubscriptions() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
