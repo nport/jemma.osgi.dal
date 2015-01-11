@@ -23,7 +23,6 @@ public class ColorControlFactory implements ClusterFunctionFactory {
 		propertiesMapping = new HashMap<String, String>();
 	}
 
-	@Override
 	public ServiceRegistration createFunctionService(IAppliance appliance, Integer endPointId, IAppliancesProxy appliancesProxy) {
 		Dictionary d = new Hashtable();
 
@@ -39,17 +38,14 @@ public class ColorControlFactory implements ClusterFunctionFactory {
 						new ColorControlDALAdapter(appliance.getPid(), endPointId, appliancesProxy), d);
 	}
 
-	@Override
 	public String getMatchingCluster() {
 		return "org.energy_home.jemma.ah.cluster.zigbee.zll.ColorControlServer";
 	}
 
-	@Override
 	public String getFunctionUID(IAppliance appliance) {
 		return IDConverters.getFunctionUid(appliance.getPid(), appliance.getConfiguration(), "ColorControl");
 	}
 
-	@Override
 	public String getMatchingPropertyName(String attributeName, IAppliance appliance) {
 		return propertiesMapping.get(attributeName);
 	}

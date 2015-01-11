@@ -28,7 +28,6 @@ public class WhiteGoodApplianceControlFactory implements ClusterFunctionFactory 
 	Map<String, String> fridgeAttributesMap;
 	Map<String, String> ovenAttributesMap;
 
-	@Override
 	public ServiceRegistration createFunctionService(IAppliance appliance, Integer endPointId, IAppliancesProxy appliancesProxy) {
 
 		washingMachineAttributesMap = new HashMap<String, String>();
@@ -111,7 +110,6 @@ public class WhiteGoodApplianceControlFactory implements ClusterFunctionFactory 
 		return reg;
 	}
 
-	@Override
 	public String getFunctionUID(IAppliance appliance) {
 
 		switch (getCategory(appliance)) {
@@ -134,7 +132,6 @@ public class WhiteGoodApplianceControlFactory implements ClusterFunctionFactory 
 		return cat;
 	}
 
-	@Override
 	public String getMatchingPropertyName(String attributeName, IAppliance appliance) {
 		switch (getCategory(appliance)) {
 		case 37: // Washing machine
@@ -149,7 +146,6 @@ public class WhiteGoodApplianceControlFactory implements ClusterFunctionFactory 
 
 	}
 
-	@Override
 	public String getMatchingCluster() {
 		return "org.energy_home.jemma.ah.cluster.zigbee.eh.ApplianceControlServer";
 	}

@@ -26,19 +26,16 @@ public class EnergyMeterDALAdapter extends BaseDALAdapter implements Meter {
 		super(appliancePid, endPointId, appliancesProxy);
 	}
 
-	@Override
 	public PropertyMetadata getPropertyMetadata(String propertyName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public OperationMetadata getOperationMetadata(String operationName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Object getServiceProperty(String propName) {
 		return properties.get(propName);
 	}
@@ -76,7 +73,6 @@ public class EnergyMeterDALAdapter extends BaseDALAdapter implements Meter {
 		}
 	}
 
-	@Override
 	public LevelData getCurrent() throws UnsupportedOperationException, IllegalStateException, DeviceException {
 		BigDecimal result = null;
 		int instantaneousDemand;
@@ -94,7 +90,6 @@ public class EnergyMeterDALAdapter extends BaseDALAdapter implements Meter {
 		return data;
 	}
 
-	@Override
 	public LevelData getTotal() throws UnsupportedOperationException, IllegalStateException, DeviceException {
 		BigDecimal result = null;
 		long total;
@@ -127,24 +122,22 @@ public class EnergyMeterDALAdapter extends BaseDALAdapter implements Meter {
 		return level;
 	}
 
-	@Override
 	public void resetTotal() throws UnsupportedOperationException, IllegalStateException, DeviceException {
 		throw new UnsupportedOperationException("Unsupported operation");
 
 	}
 
-	@Override
 	public FunctionData getMatchingPropertyValue(String attributeName, IAttributeValue attributeValue) {
 		LevelData levelData = null;
 		try {
 
 			if (attributeName == "CurrentSummationDelivered") {
-				long value = (Long) (attributeValue.getValue());
+				long value = (Long) attributeValue.getValue();
 
 				levelData = new LevelData(attributeValue.getTimestamp(), null, Units.WATT_PER_HOUR, scaleValues(new BigDecimal(
 						value)));
 			} else if (attributeName == "IstantaneousDemand") {
-				int value = (Integer) (attributeValue.getValue());
+				int value = (Integer) attributeValue.getValue();
 				levelData = new LevelData(attributeValue.getTimestamp(), null, Units.WATT, scaleValues(new BigDecimal(value)));
 			}
 		} catch (Exception e) {
@@ -153,7 +146,6 @@ public class EnergyMeterDALAdapter extends BaseDALAdapter implements Meter {
 		return levelData;
 	}
 
-	@Override
 	public void updateApplianceSubscriptions() {
 		// TODO Auto-generated method stub
 

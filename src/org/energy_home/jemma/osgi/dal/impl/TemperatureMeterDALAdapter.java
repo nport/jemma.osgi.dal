@@ -22,7 +22,6 @@ public class TemperatureMeterDALAdapter extends BaseDALAdapter implements MultiL
 		super(appliancePid, endPointId, appliancesProxy);
 	}
 
-	@Override
 	public FunctionData getMatchingPropertyValue(String attributeName, IAttributeValue attributeValue) {
 		LevelData levelData = null;
 
@@ -35,25 +34,21 @@ public class TemperatureMeterDALAdapter extends BaseDALAdapter implements MultiL
 		return levelData;
 	}
 
-	@Override
 	public PropertyMetadata getPropertyMetadata(String propertyName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public OperationMetadata getOperationMetadata(String operationName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Object getServiceProperty(String propName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public LevelData getData() throws UnsupportedOperationException, IllegalStateException, DeviceException {
 		BigDecimal result = null;
 		int value;
@@ -70,7 +65,6 @@ public class TemperatureMeterDALAdapter extends BaseDALAdapter implements MultiL
 
 	}
 
-	@Override
 	public void updateApplianceSubscriptions() {
 		try {
 			// Subscribe to LocalTemperature attribute notification

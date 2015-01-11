@@ -75,7 +75,6 @@ public class ZigBeeDalAdapter implements IApplicationService, IAttributeValuesLi
 		this.factories.put(factory.getMatchingCluster(), factory);
 	}
 
-	@Override
 	public IServiceCluster[] getServiceClusters() {
 		// nothing to be done
 		return null;
@@ -87,8 +86,6 @@ public class ZigBeeDalAdapter implements IApplicationService, IAttributeValuesLi
 	 * @param endPoint
 	 * @param appliance
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Override
 	public void notifyApplianceAdded(IApplicationEndPoint endPoint, IAppliance appliance) {
 		if (!appliance.isDriver()) {
 			// It's a virtual appliance: ignore!
@@ -137,7 +134,6 @@ public class ZigBeeDalAdapter implements IApplicationService, IAttributeValuesLi
 		functions.get(appliancePid).add(registration);
 	}
 
-	@Override
 	public void notifyApplianceRemoved(IAppliance appliance) {
 		unregisterApplianceServices(appliance.getPid());
 	}
@@ -162,7 +158,6 @@ public class ZigBeeDalAdapter implements IApplicationService, IAttributeValuesLi
 		}
 	}
 
-	@Override
 	public void notifyApplianceAvailabilityUpdated(IAppliance appliance) {
 		LOG.info("Appliance availability updated");
 		if (!appliance.isDriver()) {
@@ -174,7 +169,6 @@ public class ZigBeeDalAdapter implements IApplicationService, IAttributeValuesLi
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void updateDeviceServiceProperties(IAppliance appliance) {
 
 		/*
@@ -237,7 +231,6 @@ public class ZigBeeDalAdapter implements IApplicationService, IAttributeValuesLi
 
 	}
 
-	@Override
 	public void notifyAttributeValue(String appliancePid, Integer endPointId, String clusterName, String attributeName,
 			IAttributeValue attributeValue) {
 

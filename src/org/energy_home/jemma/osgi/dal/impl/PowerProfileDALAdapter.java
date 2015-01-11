@@ -32,32 +32,27 @@ public class PowerProfileDALAdapter extends BaseDALAdapter implements PowerProfi
 		super(appliancePid, endPointId, appliancesProxy);
 	}
 
-	@Override
 	public PropertyMetadata getPropertyMetadata(String propertyName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public OperationMetadata getOperationMetadata(String operationName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Object getServiceProperty(String propName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public FunctionData getMatchingPropertyValue(String attributeName, IAttributeValue value) {
 		boolean v = (Boolean) value.getValue();
 		BooleanData data = new BooleanData(value.getTimestamp(), null, v);
 		return data;
 	}
 
-	@Override
 	public void updateApplianceSubscriptions() {
 		// TODO Auto-generated method stub
 
@@ -68,7 +63,6 @@ public class PowerProfileDALAdapter extends BaseDALAdapter implements PowerProfi
 				.getServiceCluster(POWERPROFILECLUISTER);
 	}
 
-	@Override
 	public Short getTotalProfileNum() throws DeviceException {
 		Short val = null;
 		try {
@@ -79,7 +73,6 @@ public class PowerProfileDALAdapter extends BaseDALAdapter implements PowerProfi
 		return val;
 	}
 
-	@Override
 	public Boolean getMultipleScheduling() throws DeviceException {
 		Boolean val = null;
 		try {
@@ -90,7 +83,6 @@ public class PowerProfileDALAdapter extends BaseDALAdapter implements PowerProfi
 		return val;
 	}
 
-	@Override
 	public Boolean getEnergyRemote() throws DeviceException {
 		Boolean val = null;
 		try {
@@ -101,7 +93,6 @@ public class PowerProfileDALAdapter extends BaseDALAdapter implements PowerProfi
 		return val;
 	}
 
-	@Override
 	public Short getScheduleMode() throws DeviceException {
 		Short val = null;
 		try {
@@ -112,7 +103,6 @@ public class PowerProfileDALAdapter extends BaseDALAdapter implements PowerProfi
 		return val;
 	}
 
-	@Override
 	public void setScheduleMode(Short scheduleMode) throws DeviceException {
 
 		try {

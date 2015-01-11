@@ -25,8 +25,6 @@ public class EnergyMeterSimpleMeteringFactory implements ClusterFunctionFactory 
 		propertiesMapping.put("IstantaneousDemand", Meter.PROPERTY_CURRENT);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Override
 	public ServiceRegistration createFunctionService(IAppliance appliance, Integer endPointId, IAppliancesProxy appliancesProxy) {
 		Dictionary d = new Hashtable();
 
@@ -58,17 +56,14 @@ public class EnergyMeterSimpleMeteringFactory implements ClusterFunctionFactory 
 		return cat;
 	}
 
-	@Override
 	public String getMatchingCluster() {
 		return "org.energy_home.jemma.ah.cluster.zigbee.metering.SimpleMeteringServer";
 	}
 
-	@Override
 	public String getFunctionUID(IAppliance appliance) {
 		return IDConverters.getFunctionUid(appliance.getPid(), appliance.getConfiguration(), "EnergyMeter");
 	}
 
-	@Override
 	public String getMatchingPropertyName(String attributeName, IAppliance appliance) {
 		return propertiesMapping.get(attributeName);
 	}
